@@ -1,3 +1,6 @@
+//basic variable using colours
+$table-bg-color: #5A50FF;
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -10,7 +13,7 @@ table {
   width: 100%;
 }
 
-th,
+th ,
 td {
   border: 1px solid #ffffff;
   text-align: left;
@@ -19,7 +22,8 @@ td {
 }
 
 th {
-  background-color: rgb(117, 201, 250);
+  background-color: $table-bg-color;
+  color:white;
 }
 
 td {
@@ -37,5 +41,5 @@ form td:last-child {
 }
 
 form * {
-  font-size: 28px;
+  font-size: 16px;
 }

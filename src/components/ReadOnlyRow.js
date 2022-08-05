@@ -1,15 +1,13 @@
 import React from "react";
 
-const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => { // pass the contact as prop
+const ReadOnlyRow = ({ glossary, handleEditClick, handleDeleteClick }) => { // pass the glossary as prop
   return (
-    <tr>
-      <td>{contact.fullName}</td>
-      <td>{contact.address}</td>
-      <td>{contact.phoneNumber}</td>
-      <td>{contact.email}</td>
+    <tr key={glossary.id}>
+      <td>{glossary.term} </td>
+      <td>{glossary.definition}</td>
       <td>
-        <button type="button" onClick={(event) => handleEditClick(event, contact)}>Edit</button>
-        <button type="button" onClick={() => handleDeleteClick(contact.id)}>Delete</button>
+        <button type="button" onClick={(event) => handleEditClick(event, glossary)}>Editt</button>
+        <button type="button" onClick={() => handleDeleteClick(glossary.id)}>Delete</button>
       </td>
     </tr>
   );
