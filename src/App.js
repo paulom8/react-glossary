@@ -95,7 +95,10 @@ const App = () => {
 
     console.log('Submit Edit [' + editedGlossary.id + ']');
     console.log(editedGlossary);
-    setGlossaries(newGlossaries);
+    setGlossaries(newGlossaries.sort((a, b) => {
+      return a[sortType].localeCompare(b[sortType]); // sort depending on the field clicked
+  }));
+
     // in this case I will send this value to the API to update the value in the database for example
     setEditGlossaryId(null);
   };
