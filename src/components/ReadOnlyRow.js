@@ -2,7 +2,7 @@ import React from "react";
 
 const ReadOnlyRow = ({ glossary, handleEditClick, handleDeleteClick }) => { // pass the glossary as prop
   return (
-    <tr key={glossary.id}>
+    <tr>
       <td>{glossary.term} </td>
       <td>{glossary.definition}</td>
       <td>

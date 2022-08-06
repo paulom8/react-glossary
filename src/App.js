@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react"; // Fragment is to allow more than one child component
+import React, { useState, useEffect, useRef, Fragment } from "react"; // Fragment is to allow more than one child component
 import { nanoid } from "nanoid"; // generate an id
 import "./styles/App.scss";
 import ReadOnlyRow from "./components/ReadOnlyRow";  // I created two different component. One to read the values and display
@@ -7,14 +7,12 @@ import EditableRow from "./components/EditableRow"; // the other one to edit. Th
 import data from "./mock-data.json"; // here I created a mock up data. In real practice probably that would come from an API that reads the
                                      // database. For this exercise, I am using a pure json file with the data similating the database return
 
-
 const App = () => {
   const [glossaries, setGlossaries] = useState(data); // intialize the the use State from the data coming from the mock up data
-  console.log('start');
-  //order by Term field
-  //glossaries.sort((a,b)=> (a.term > b.term) ? 1 : -1) ;
-  // I found a better way to do it
-  glossaries.sort((a,b) => a.term.localeCompare(b.term)) ;
+  const [sortType, setSortType] = useState('term'); // used to order the elements
+  const termRef = useRef(null);
+  const termDefinition = useRef(null);
+
   const [addFormData, setAddFormData] = useState({ // add a new Glossary. Initalize to ne an object with empty values
     term: "",
     definition: "",
@@ -38,7 +36,6 @@ const App = () => {
     newFormData[fieldName] = fieldValue; // update the value
 
     console.log('insert');
-    console.log(newFormData);
     setAddFormData(newFormData);
   };
 
@@ -68,9 +65,17 @@ const App = () => {
 
     const newGlossaries = [...glossaries, newGlossary]; // spread operator to copy the
     console.log('submit insert [' + newGlossary.id + ']');
+    console.log([sortType]);
+
     console.log(newGlossary);
      // in this case I will send this value to the API to insert the value in the database for example
-    setGlossaries(newGlossaries);
+    setGlossaries(newGlossaries.sort((a, b) => {
+        return a[sortType].localeCompare(b[sortType]); // sort depending on the field clicked
+    }));
+    //clear fields
+   // event.target.reset(); -> that could be used to clear all fields
+   termRef.current.value = '';
+   termDefinition.current.value = '';
   };
 
   const handleEditFormSubmit = (event) => {
@@ -123,6 +128,22 @@ const App = () => {
     setGlossaries(newGlossaries);
   };
 
+  useEffect(() => {
+    const sortArray = type => {
+      const types = {
+        term: 'term',  
+        definition: 'definition',
+      };
+      const sortProperty = types[type];
+      const sorted = [...glossaries].sort((a, b) => {
+          return a[sortProperty].localeCompare(b[sortProperty]); // sort depending on the field clicked
+      });
+      setGlossaries(sorted);
+    };
+    sortArray(sortType);
+
+  }, [sortType]);
+
   return (
     <div className="app-container">
      {/* Wrap the entire table into the form - edit and display to cause issues 
@@ -132,8 +153,8 @@ const App = () => {
         <table>
           <thead>
             <tr>
-              <th>Term</th>
-              <th>Definition</th>
+              <th className="clickItem" onClick={() => setSortType('term')}>Term</th>
+              <th className="clickItem" onClick={() => setSortType('definition')}>Definition</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -141,8 +162,10 @@ const App = () => {
             { /* Map is the easier way to retrieve the data */ }
             { /* Fragment is  to allow more than one child component */ }
             {/*  the glossary.id is to Toogle between the 2 components depending oin the button - Edit or Display values */}
-            {glossaries.map((glossary) => (
-              <Fragment>
+           
+            {glossaries.map(glossary => (
+              <Fragment key={glossary.id}>
+                { /* It is important to have a key t eliminate the message Each child in a list should have a unique "key" prop. fragment */ }
                 {editGlossaryId === glossary.id ? (
                   <EditableRow editFormData={editFormData} handleEditFormChange={handleEditFormChange} handleCancelClick={handleCancelClick} />
                 ) : (
@@ -157,8 +180,8 @@ const App = () => {
       {/* That is to add a new Glossary */ }
       <h2>Add a Glossary</h2>
       <form onSubmit={handleAddFormSubmit}>
-        <input type="text" name="term" required="required" placeholder="Enter a term..." onChange={handleAddFormChange}  />
-        <input type="text" name="definition" required="required" placeholder="Enter an definition..." onChange={handleAddFormChange} />
+        <input type="text" ref={termRef} name="term" required="required" placeholder="Enter a term..." onChange={handleAddFormChange}  />
+        <input type="text" ref={termDefinition} name="definition" required="required" placeholder="Enter an definition..." onChange={handleAddFormChange} />
         <button type="submit">Add</button>
       </form>
     </div>
