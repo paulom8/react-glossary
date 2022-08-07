@@ -1,5 +1,25 @@
 //basic variable using colours
 $table-bg-color: #5A50FF;
+$td_term: 20%;
+$td_definition: 80%;
+
+$txt_term: 18%;
+$txt_definition: 30%;
+
+.td_term {
+  width: $td_term;
+}
+.td_definition {
+  width: $td_definition;
+}
+
+.txt_term {
+  width: $txt_term;
+}
+.txt_definition {
+  width: $txt_definition;
+}
+
 
 .app-container {
   display: flex;
@@ -42,4 +62,25 @@ form td:last-child {
 
 form * {
   font-size: 16px;
+}
+
+
+.btn {
+  align-items: center;
+  background-color: #0A66C2;
+  border: 0;
+  border-radius: 100px;
+  color: #ffffff;
+  cursor: pointer;
+  line-height: 20px;
+  min-height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+}
+
+.btn:hover,
+.btn:focus { 
+  background-color: #16437E;
+  color: #ffffff;
 }

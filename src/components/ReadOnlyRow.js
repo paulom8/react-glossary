@@ -6,8 +6,8 @@ const ReadOnlyRow = ({ glossary, handleEditClick, handleDeleteClick }) => { // p
       <td>{glossary.term} </td>
       <td>{glossary.definition}</td>
       <td>
-        <button type="button" onClick={(event) => handleEditClick(event, glossary)}>Edit</button>
-        <button type="button" onClick={() => handleDeleteClick(glossary.id)}>Delete</button>
+        <button type="button" className="btn" onClick={(event) => handleEditClick(event, glossary)}>Edit</button>&nbsp;
+        <button type="button"  className="btn" onClick={() => handleDeleteClick(glossary.id)}>Delete</button>
       </td>
     </tr>
   );

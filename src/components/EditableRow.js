@@ -11,8 +11,8 @@ const EditableRow = ({ editFormData, handleEditFormChange, handleCancelClick,}) 
       <td><input type="text" required="required" size={105} placeholder="Enter an definition..." name="definition" value={editFormData.definition} onChange={handleEditFormChange}></input></td>
       <td>
         { /* Better put Cancel button first to avoid wrong clik as this button is display as the same position as Edit */ }
-        <button type="button" onClick={handleCancelClick}>Cancel</button>
-        <button type="submit">Save</button>
+        <button className="btn" type="button" onClick={handleCancelClick}>Cancel</button>&nbsp;
+        <button className="btn" type="submit">Save</button>
       </td>
     </tr>
   );

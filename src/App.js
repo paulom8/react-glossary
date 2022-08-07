@@ -156,8 +156,8 @@ const App = () => {
         <table>
           <thead>
             <tr>
-              <th className="clickItem" onClick={() => setSortType('term')}>Term</th>
-              <th className="clickItem" onClick={() => setSortType('definition')}>Definition</th>
+              <th className="clickItem, td_term" onClick={() => setSortType('term')}>Term</th>
+              <th className="clickItem, td_definition " onClick={() => setSortType('definition')}>Definition</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -181,14 +181,16 @@ const App = () => {
       </form>
 
       {/* That is to add a new Glossary */ }
-      <h2>Add a Glossary</h2>
+      <h3>Add a new item</h3>
       <form onSubmit={handleAddFormSubmit}>
-        <input type="text" ref={termRef} name="term" required="required" placeholder="Enter a term..." onChange={handleAddFormChange}  />
-        <input type="text" ref={termDefinition} name="definition" required="required" placeholder="Enter an definition..." onChange={handleAddFormChange} />
-        <button type="submit">Add</button>
+        <input type="text" ref={termRef} className="txt_term" name="term" required="required" placeholder="Enter a term..." onChange={handleAddFormChange}  />
+        <input type="text" ref={termDefinition} className="txt_definition" name="definition" required="required" placeholder="Enter an definition..." onChange={handleAddFormChange} />
+        <button type="submit" class="btn">Confirm</button>
       </form>
     </div>
   );
 };
 
 export default App;
+
+
